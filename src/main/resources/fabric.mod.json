@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "overly_complicated_garbage",
+  "version": "${version}",
+  "name": "Overly Complicated Garbage",
+  "description": "Have you ever wondered what happens with your garbage in real life? Stuff just doesn't \"despawn\" out of existance, this mod adds that *painful* experience in to Minecraft!",
+  "authors": [],
+  "contact": {},
+  "license": "GPL-3.0",
+  "icon": "assets/overly_complicated_garbage/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "com.thesatyric.overly_complicated_garbage.client.OverlyComplicatedGarbageDataGenerator"
+    ],
+    "client": [
+      "com.thesatyric.overly_complicated_garbage.client.OverlyComplicatedGarbageClient"
+    ],
+    "main": [
+      "com.thesatyric.overly_complicated_garbage.OverlyComplicatedGarbage"
+    ]
+  },
+  "mixins": [
+    "overly_complicated_garbage.mixins.json",
+    {
+      "config": "overly_complicated_garbage.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
