@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "minecraft:block/snow"
+  "variants": {
+    "": {
+      "model": "overly_complicated_garbage:block/ash_block"
+    }
   }
 }

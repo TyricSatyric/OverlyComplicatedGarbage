@@ -1,38 +1,41 @@
 package com.thesatyric.overly_complicated_garbage;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.SandBlock;
-import net.minecraft.block.SnowBlock;
+import com.thesatyric.overly_complicated_garbage.blocks.AshBlock;
+import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.ColorCode;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 
 import java.util.function.Function;
 
 public class OCGarbageBlocks {
-    public static final SnowBlock ASH_LAYER = (SnowBlock) register("ash_layer",
-                SnowBlock::new,
-                AbstractBlock.Settings.create().breakInstantly(),
-                false);
+    public static final AshBlock ASH_LAYER = (AshBlock) register("ash_layer",
+                AshBlock::new,
+                AbstractBlock.Settings.create()
+                        .breakInstantly()
+                        .sounds(BlockSoundGroup.SAND)
+                        .nonOpaque()
+                        .blockVision((state, world, pos) -> (Integer)state.get(AshBlock.LAYERS) >= 16));
+//    public static final ColoredFallingBlock ASH_BLOCK = (ColoredFallingBlock) register("ash_block",
+//                (settings) -> new ColoredFallingBlock(new ColorCode(ColorHelper.getArgb(10, 10, 10)), settings),
+//            ColoredFallingBlock.Settings.create()
+//                        .breakInstantly()
+//                        .sounds(BlockSoundGroup.SAND));
 
-    public static void initialize() {}
-    private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean shouldRegisterItem) {
+    public static void initialize() {
+
+    }
+    private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings) {
         RegistryKey<Block> blockKey = keyOfBlock(name);
         Block block = blockFactory.apply(settings.registryKey(blockKey));
 
-        if (shouldRegisterItem) {
-            // Items need to be registered with a different type of registry key, but the ID
-            // can be the same.
-            RegistryKey<Item> itemKey = keyOfItem(name);
-
-            BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey));
-            Registry.register(Registries.ITEM, itemKey, blockItem);
-        }
 
         return Registry.register(Registries.BLOCK, blockKey, block);
     }

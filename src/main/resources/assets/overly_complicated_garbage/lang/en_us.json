@@ -1,4 +1,7 @@
 {
-  "item.overly_complicated_garbage.ash": "Ash",
-  "block.overly_complicated_garbage.ash_layer": "Ash Layer"
+  "item.overly_complicated_garbage.ash_block": "Ash Block",
+  "item.overly_complicated_garbage.ash_dust": "Ash Dust",
+  "item.overly_complicated_garbage.ash_layer": "Ash Layer",
+  "item.overly_complicated_garbage.cactus_prickles": "Prickles",
+  "itemGroup.overly_complicated_garbage": "Overly Complicated Garbage"
 }

@@ -4,6 +4,7 @@
   "package": "com.thesatyric.overly_complicated_garbage.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "ItemModelManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

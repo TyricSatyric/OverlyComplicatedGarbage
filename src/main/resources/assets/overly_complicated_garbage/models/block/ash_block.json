@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "overly_complicated_garbage:block/ash_block",
+    "particle": "overly_complicated_garbage:block/ash_block"
+  }
+}
