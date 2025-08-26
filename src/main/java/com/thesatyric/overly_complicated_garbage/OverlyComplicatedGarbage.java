@@ -36,6 +36,7 @@ public class OverlyComplicatedGarbage implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(GARBAGE_ITEM_GROUP_KEY).register(itemGroup ->{
             itemGroup.add(OCGarbageItems.ASH_DUST);
             itemGroup.add(OCGarbageItems.CACTUS_PRICKLES);
+            itemGroup.add(OCGarbageItems.BIOMASS_PROCESSOR);
         });
         LOGGER.info("Get ready to overcomplicate your garbage!");
     }

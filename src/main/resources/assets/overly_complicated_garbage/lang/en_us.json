@@ -3,5 +3,8 @@
   "item.overly_complicated_garbage.ash_dust": "Ash Dust",
   "item.overly_complicated_garbage.ash_layer": "Ash Layer",
   "item.overly_complicated_garbage.cactus_prickles": "Prickles",
+  "item.overly_complicated_garbage.biomass_processor": "Biomass Processor",
+  "stat.overly_complicated_garbage.interact_with_biomass_processor": "Interactions With Biomass Processor",
+  "gui.recipebook.toggleRecipes.processable": "Showing Processable",
   "itemGroup.overly_complicated_garbage": "Overly Complicated Garbage"
 }

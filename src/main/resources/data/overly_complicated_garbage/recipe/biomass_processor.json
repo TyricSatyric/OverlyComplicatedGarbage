@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "iii",
+    "ili",
+    "iii"
+  ],
+  "key": {
+    "i": "minecraft:iron_ingot",
+    "l": "minecraft:lava_bucket"
+  },
+  "result": {
+    "id": "overly_complicated_garbage:biomass_processor",
+    "count": 1
+  }
+}

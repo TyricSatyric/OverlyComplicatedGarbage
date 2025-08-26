@@ -19,6 +19,7 @@ public class OCGarbageItems {
     public static final Item ASH_DUST = register("ash_dust", AshDustItem::new, new Item.Settings().fireproof());
 //    public  static final Item ASH_BLOCK = register("ash_block", OCGarbageBlocks.ASH_BLOCK, new BlockItem.Settings().fireproof());
     public static final Item CACTUS_PRICKLES = register("cactus_prickles", Item::new, new Item.Settings().component(OCGarbageComponents.PRICKLY_COMPONENT, Boolean.TRUE));
+    public static final Item BIOMASS_PROCESSOR = register("biomass_processor", OCGarbageBlocks.BIOMASS_PROCESSOR, new BlockItem.Settings());
 
     public static void initialize()
     {
