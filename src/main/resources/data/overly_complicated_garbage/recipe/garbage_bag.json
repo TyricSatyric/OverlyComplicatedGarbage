@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "O O",
+    "OOO"
+  ],
+  "key": {
+    "#": "minecraft:string",
+    "O": "overly_complicated_garbage:eco_friendly_plastic"
+  },
+  "result": {
+    "id": "overly_complicated_garbage:plastic_bag",
+    "count": 1
+  }
+}

@@ -1,12 +1,12 @@
 {
   "textures": [
-    "overly_complicated_garbage:generic_7",
-    "overly_complicated_garbage:generic_6",
-    "overly_complicated_garbage:generic_5",
-    "overly_complicated_garbage:generic_4",
-    "overly_complicated_garbage:generic_3",
-    "overly_complicated_garbage:generic_2",
-    "overly_complicated_garbage:generic_1",
-    "overly_complicated_garbage:generic_0"
+    "minecraft:generic_7",
+    "minecraft:generic_6",
+    "minecraft:generic_5",
+    "minecraft:generic_4",
+    "minecraft:generic_3",
+    "minecraft:generic_2",
+    "minecraft:generic_1",
+    "minecraft:generic_0"
   ]
 }

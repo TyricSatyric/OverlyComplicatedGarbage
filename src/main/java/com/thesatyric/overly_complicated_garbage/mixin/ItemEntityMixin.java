@@ -7,9 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.entity.damage.DamageTypes;
-import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -17,6 +15,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionTypes;
 import net.minecraft.world.event.GameEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -26,6 +25,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Objects;
 
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin extends Entity {
@@ -81,6 +82,7 @@ public abstract class ItemEntityMixin extends Entity {
      */
     @Overwrite
     public final boolean damage(ServerWorld world, DamageSource source, float amount) {
+
         if (this.isAlwaysInvulnerableTo(source)) {
             return false;
         } else if (!world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) && source.getAttacker() instanceof MobEntity) {
@@ -102,6 +104,8 @@ public abstract class ItemEntityMixin extends Entity {
             this.health = (int)((float)this.health - amount);
             this.emitGameEvent(GameEvent.ENTITY_DAMAGE, source.getAttacker());
             if (this.health <= 0) {
+                OverlyComplicatedGarbage.LOGGER.info("Dead");
+                OverlyComplicatedGarbage.LOGGER.info(source.toString());
                 this.getStack().onItemEntityDestroyed((ItemEntity)(Object)this);
                 this.discard();
             }
@@ -133,5 +137,21 @@ public abstract class ItemEntityMixin extends Entity {
         }
     }
 
+    
+    public void attemptTickInVoid() {
+        if (Objects.equals(this.getWorld().getDimensionEntry().getIdAsString(), "minecraft:the_end"))
+        {
+            if (this.getY() < (double)(this.getWorld().getBottomY())) {
+                this.setVelocity(0, 5, 0);
+            }
+        }
+        else
+        {
+            if (this.getY() < (double)(this.getWorld().getBottomY())) {
+                this.setVelocity(0, 1, 0);
+            }
+
+        }
+    }
 
 }

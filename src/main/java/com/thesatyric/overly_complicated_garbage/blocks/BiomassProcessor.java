@@ -42,25 +42,16 @@ public class BiomassProcessor extends Block {
 
     @Override
     protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        player.swingHand(hand);
-        if (world instanceof ServerWorld)
+        if (stack.isIn(OCGTags.Item.BIO_ITEMS))
         {
-            if (stack.isIn(OCGTags.Item.BIO_ITEMS))
+            if (!player.isCreative())
             {
-                if (!player.isCreative())
-                {
-                    stack.decrement(1);
-                }
-                player.giveItemStack(new ItemStack(OCGarbageItems.ASH_DUST));
+                stack.decrement(1);
             }
+            player.giveItemStack(new ItemStack(OCGarbageItems.ECO_FRIENDLY_PLASTIC));
+            return ActionResult.SUCCESS;
         }
-        return ActionResult.SUCCESS;
-    }
-
-    @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        player.swingHand(player.getActiveHand());
-        return ActionResult.SUCCESS;
+        return ActionResult.PASS;
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {

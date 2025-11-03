@@ -2,7 +2,10 @@ package com.thesatyric.overly_complicated_garbage;
 
 import com.thesatyric.overly_complicated_garbage.blocks.AshBlock;
 import com.thesatyric.overly_complicated_garbage.blocks.BiomassProcessor;
+import com.thesatyric.overly_complicated_garbage.blocks.CactusPricklesBlock;
+import com.thesatyric.overly_complicated_garbage.blocks.GarbageBag;
 import net.minecraft.block.*;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -30,7 +33,33 @@ public class OCGarbageBlocks {
     public static final BiomassProcessor BIOMASS_PROCESSOR = (BiomassProcessor) register("biomass_processor",
                 BiomassProcessor::new,
                 AbstractBlock.Settings.create()
-                        .sounds(BlockSoundGroup.ANVIL));
+                        .sounds(BlockSoundGroup.ANVIL)
+                        .resistance(100f)
+                        .hardness(3f)
+                        .requiresTool());
+    public static final Block ECO_FRIENDLY_PLASTIC_BLOCK = register("eco_friendly_plastic_block",
+            Block::new,
+            AbstractBlock.Settings.create()
+                    .sounds(BlockSoundGroup.COBWEB)
+                    .hardness(0.7f)
+                    .resistance(0.5f)
+                    .solid());
+    public static final CactusPricklesBlock CACTUS_PLACED_PRICKLES = (CactusPricklesBlock) register("cactus_prickles_placed",
+            CactusPricklesBlock::new,
+            AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .nonOpaque()
+                    .noCollision()
+                    .strength(0f)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+                    .sounds(BlockSoundGroup.MOSS_BLOCK));
+    public static  final Block GARBAGE_BAG = register("garbage_bag", GarbageBag::new, AbstractBlock.Settings.create()
+            .nonOpaque()
+            .pistonBehavior(PistonBehavior.BLOCK)
+            .sounds(BlockSoundGroup.AZALEA_LEAVES)
+            .hardness(0.5f)
+            .nonOpaque());
+
 
 
     public static void initialize() {}

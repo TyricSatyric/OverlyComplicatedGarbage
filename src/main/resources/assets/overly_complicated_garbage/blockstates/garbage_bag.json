@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "facing=north,fill=0,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open"
+    },
+    "facing=north,fill=1,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open_mid_fill"
+    },
+    "facing=north,fill=2,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open_filled"
+    },
+    "facing=north,fill=0,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed"
+    },
+    "facing=north,fill=1,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed"
+    },
+    "facing=north,fill=2,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed"
+    },
+    "facing=east,fill=0,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open",
+      "y": 90
+    },
+    "facing=east,fill=1,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open_mid_fill",
+      "y": 90
+    },
+    "facing=east,fill=2,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open_filled",
+      "y": 90
+    },
+    "facing=east,fill=0,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed",
+      "y": 90
+    },
+    "facing=east,fill=1,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed",
+      "y": 90
+    },
+    "facing=east,fill=2,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed",
+      "y": 90
+    },
+    "facing=south,fill=0,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open",
+      "y": 180
+    },
+    "facing=south,fill=1,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open_mid_fill",
+      "y": 180
+    },
+    "facing=south,fill=2,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open_filled",
+      "y": 180
+    },
+    "facing=south,fill=0,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed",
+      "y": 180
+    },
+    "facing=south,fill=1,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed",
+      "y": 180
+    },
+    "facing=south,fill=2,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed",
+      "y": 180
+    },
+    "facing=west,fill=0,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open",
+      "y": 270
+    },
+    "facing=west,fill=1,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open_mid_fill",
+      "y": 270
+    },
+    "facing=west,fill=2,open=true": {
+      "model": "overly_complicated_garbage:block/garbage_bag_open_filled",
+      "y": 270
+    },
+    "facing=west,fill=0,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed",
+      "y": 270
+    },
+    "facing=west,fill=1,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed",
+      "y": 270
+    },
+    "facing=west,fill=2,open=false": {
+      "model": "overly_complicated_garbage:block/garbage_bag_closed",
+      "y": 270
+    }
+  }
+}

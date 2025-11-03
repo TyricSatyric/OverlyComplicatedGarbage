@@ -109,6 +109,7 @@
         "minecraft:baked_potato",
         "minecraft:poisonous_potato",
         "minecraft:beetroot",
-        "minecraft:dried_kelp"
+        "minecraft:dried_kelp",
+        "overly_complicated_garbage:cactus_prickles"
     ]
 }

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building_blocks",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": "overly_complicated_garbage:eco_friendly_plastic"
+  },
+  "result": {
+    "id": "overly_complicated_garbage:eco_friendly_plastic_block",
+    "count": 1
+  }
+}

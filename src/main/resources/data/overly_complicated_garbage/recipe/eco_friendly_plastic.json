@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building_blocks",
+  "ingredients": [
+    "overly_complicated_garbage:eco_friendly_plastic_block"
+  ],
+  "result": {
+    "id": "overly_complicated_garbage:eco_friendly_plastic",
+    "count": 4
+  }
+}

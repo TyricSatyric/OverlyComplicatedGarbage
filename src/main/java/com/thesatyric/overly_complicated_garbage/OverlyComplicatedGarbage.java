@@ -4,7 +4,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -30,6 +29,7 @@ public class OverlyComplicatedGarbage implements ModInitializer {
         OCGarbageComponents.initialize();
         OCGarbageParticles.initialize();
         OCProperties.initialize();
+        OCGBlockEntities.initialize();
         OCGarbageBlocks.initialize();
         OCGarbageItems.initialize();
         Registry.register(Registries.ITEM_GROUP, GARBAGE_ITEM_GROUP_KEY, GARBAGE_ITEM_GROUP);
@@ -37,6 +37,9 @@ public class OverlyComplicatedGarbage implements ModInitializer {
             itemGroup.add(OCGarbageItems.ASH_DUST);
             itemGroup.add(OCGarbageItems.CACTUS_PRICKLES);
             itemGroup.add(OCGarbageItems.BIOMASS_PROCESSOR);
+            itemGroup.add(OCGarbageItems.ECO_FRIENDLY_PLASTIC);
+            itemGroup.add(OCGarbageItems.ECO_FRIENDLY_PLASTIC_BLOCK);
+            itemGroup.add(OCGarbageItems.PLASTIC_BAG);
         });
         LOGGER.info("Get ready to overcomplicate your garbage!");
     }

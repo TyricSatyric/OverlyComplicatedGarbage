@@ -3,7 +3,10 @@
   "item.overly_complicated_garbage.ash_dust": "Ash Dust",
   "item.overly_complicated_garbage.ash_layer": "Ash Layer",
   "item.overly_complicated_garbage.cactus_prickles": "Prickles",
+  "item.overly_complicated_garbage.eco_friendly_plastic": "Eco-Friendly Plastic",
+  "item.overly_complicated_garbage.eco_friendly_plastic_block": "Eco-Friendly Plastic Block",
   "item.overly_complicated_garbage.biomass_processor": "Biomass Processor",
+  "item.overly_complicated_garbage.plastic_bag": "Eco-Friendly Plastic Bag",
   "stat.overly_complicated_garbage.interact_with_biomass_processor": "Interactions With Biomass Processor",
   "gui.recipebook.toggleRecipes.processable": "Showing Processable",
   "itemGroup.overly_complicated_garbage": "Overly Complicated Garbage"

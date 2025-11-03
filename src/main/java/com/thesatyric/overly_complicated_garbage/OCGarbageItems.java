@@ -3,9 +3,7 @@ package com.thesatyric.overly_complicated_garbage;
 import com.thesatyric.overly_complicated_garbage.items.AshDustItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.EnderPearlItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -18,8 +16,11 @@ public class OCGarbageItems {
 
     public static final Item ASH_DUST = register("ash_dust", AshDustItem::new, new Item.Settings().fireproof());
 //    public  static final Item ASH_BLOCK = register("ash_block", OCGarbageBlocks.ASH_BLOCK, new BlockItem.Settings().fireproof());
-    public static final Item CACTUS_PRICKLES = register("cactus_prickles", Item::new, new Item.Settings().component(OCGarbageComponents.PRICKLY_COMPONENT, Boolean.TRUE));
+    public static final Item CACTUS_PRICKLES = register("cactus_prickles", OCGarbageBlocks.CACTUS_PLACED_PRICKLES, new BlockItem.Settings().component(OCGarbageComponents.PRICKLY_COMPONENT, Boolean.TRUE));
     public static final Item BIOMASS_PROCESSOR = register("biomass_processor", OCGarbageBlocks.BIOMASS_PROCESSOR, new BlockItem.Settings());
+    public static final Item ECO_FRIENDLY_PLASTIC = register("eco_friendly_plastic", Item::new, new Item.Settings());
+    public static final Item ECO_FRIENDLY_PLASTIC_BLOCK = register("eco_friendly_plastic_block", OCGarbageBlocks.ECO_FRIENDLY_PLASTIC_BLOCK, new BlockItem.Settings());
+    public static final Item PLASTIC_BAG = register("plastic_bag", OCGarbageBlocks.GARBAGE_BAG, new BlockItem.Settings());
 
     public static void initialize()
     {
