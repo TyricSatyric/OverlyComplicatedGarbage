@@ -142,7 +142,7 @@ public abstract class ItemEntityMixin extends Entity {
         if (Objects.equals(this.getWorld().getDimensionEntry().getIdAsString(), "minecraft:the_end"))
         {
             if (this.getY() < (double)(this.getWorld().getBottomY())) {
-                this.setVelocity(0, 5, 0);
+                this.setVelocity(0, 3, 0);
             }
         }
         else

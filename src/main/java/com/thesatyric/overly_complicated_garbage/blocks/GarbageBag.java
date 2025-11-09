@@ -34,7 +34,7 @@ public class GarbageBag extends BlockWithEntity {
     public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
     public static final BooleanProperty OPEN = Properties.OPEN;
     public static final IntProperty FILL = OCProperties.GARBAGE_FILL;
-
+    
     public GarbageBag(Settings settings) {
         super(settings);
         this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(OPEN, true)));
