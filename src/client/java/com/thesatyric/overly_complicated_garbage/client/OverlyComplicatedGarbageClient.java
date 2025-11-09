@@ -12,7 +12,7 @@ public class OverlyComplicatedGarbageClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         OverlyComplicatedGarbage.LOGGER.info("Initializing Client");
-        //OCGEntityModelLayers.initialize();
+
         ParticleFactoryRegistry.getInstance().register(OCGarbageParticles.ASH_DUST_PARTICLE, AshDustParticle.Factory::new);
     }
 }

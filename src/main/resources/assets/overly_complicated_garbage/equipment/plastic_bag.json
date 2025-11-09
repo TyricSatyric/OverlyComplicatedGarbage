@@ -1,6 +1,6 @@
 {
   "layers": {
-    "bag": [
+    "humanoid": [
       {
         "texture": "overly_complicated_garbage:plastic_bag"
       }

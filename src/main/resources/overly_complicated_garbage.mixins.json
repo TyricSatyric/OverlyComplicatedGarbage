@@ -4,6 +4,8 @@
   "package": "com.thesatyric.overly_complicated_garbage.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ArmorSlotMixin",
+    "EquippableComponentMixin",
     "ItemEntityMixin",
     "ItemMixin"
   ],

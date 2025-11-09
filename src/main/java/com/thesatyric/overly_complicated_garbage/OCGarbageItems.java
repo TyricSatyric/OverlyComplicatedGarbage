@@ -53,7 +53,8 @@ public class OCGarbageItems {
             PLASTIC_BAG_KEY
     );
     public static final Item PLASTIC_BAG = register("plastic_bag", PlasticBagItem::new, new PlasticBagItem.Settings()
-            .component(DataComponentTypes.EQUIPPABLE, EquippableComponent.builder(EquipmentSlot.HEAD).model(PLASTIC_BAG_KEY).swappable(false).build()));
+            .component(DataComponentTypes.EQUIPPABLE, EquippableComponent.builder(EquipmentSlot.HEAD).model(PLASTIC_BAG_KEY).swappable(false).build())
+            .maxCount(1));
 
 
     public static void initialize()
