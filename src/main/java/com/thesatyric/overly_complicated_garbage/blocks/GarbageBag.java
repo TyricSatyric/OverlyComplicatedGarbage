@@ -1,11 +1,14 @@
 package com.thesatyric.overly_complicated_garbage.blocks;
 
 import com.mojang.serialization.MapCodec;
+import com.thesatyric.overly_complicated_garbage.OCGarbageItems;
 import com.thesatyric.overly_complicated_garbage.OCProperties;
 import com.thesatyric.overly_complicated_garbage.OverlyComplicatedGarbage;
 import com.thesatyric.overly_complicated_garbage.blocks.block_entities.GarbageBagBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -29,6 +32,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class GarbageBag extends BlockWithEntity {
     public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
@@ -78,9 +83,17 @@ public class GarbageBag extends BlockWithEntity {
             garbageBlockEntity.addItem(world, pos, player.getStackInHand(player.getActiveHand()), state);
             world.playSound(player, pos, SoundEvents.ITEM_BUNDLE_INSERT, SoundCategory.BLOCKS);
         } else {
+
             OverlyComplicatedGarbage.LOGGER.info("Using without item");
             world.setBlockState(pos, state.with(OPEN, !state.get(OPEN)));
             world.playSound(player, pos, SoundEvents.ITEM_BUNDLE_DROP_CONTENTS, SoundCategory.BLOCKS);
+            if (player.isSneaking())
+            {
+                ItemStack stack = new ItemStack(OCGarbageItems.HELD_PLASTIC_BAG);
+                stack.set(DataComponentTypes.CONTAINER, ContainerComponent.fromStacks(garbageBlockEntity.getItems()));
+                player.setStackInHand(player.getActiveHand(), stack);
+                world.removeBlock(pos, false);
+            }
         }
         return ActionResult.SUCCESS;
     }

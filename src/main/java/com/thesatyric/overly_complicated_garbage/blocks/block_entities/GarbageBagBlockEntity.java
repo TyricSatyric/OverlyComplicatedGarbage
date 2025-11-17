@@ -49,6 +49,10 @@ public class GarbageBagBlockEntity extends BlockEntity implements Inventory {
         OverlyComplicatedGarbage.LOGGER.info(msg);
     }
 
+    public DefaultedList<ItemStack> getItems()
+    {
+        return items;
+    }
     public void addItem(World world, BlockPos pos, ItemStack stack, BlockState state)
     {
         var itemsToAdd = 0;
