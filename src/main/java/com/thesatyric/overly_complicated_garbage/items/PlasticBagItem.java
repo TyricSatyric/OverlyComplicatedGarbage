@@ -43,12 +43,13 @@ public class PlasticBagItem extends BlockItem {
     public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
         if (otherStack.getItem() == Items.SHEARS)
         {
-            otherStack.damage(1, player);
-            ItemStack broken = new ItemStack(OCGarbageItems.ECO_FRIENDLY_PLASTIC, 4);
-            stack = broken;
             if (player.getEquippedStack(EquipmentSlot.HEAD) == stack)
             {
-                player.dropItem(stack, true);
+                stack.setCount(0);
+                if (player.isCreative())
+                    player.dropCreativeStack(new ItemStack(OCGarbageItems.BROKEN_PLASTIC_BAG));
+                else
+                    player.dropItem(new ItemStack(OCGarbageItems.BROKEN_PLASTIC_BAG), true);
             }
             return true;
         }

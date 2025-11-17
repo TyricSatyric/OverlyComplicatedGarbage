@@ -1,11 +1,21 @@
 package com.thesatyric.overly_complicated_garbage;
 
 import com.thesatyric.overly_complicated_garbage.items.AshDustItem;
+import com.thesatyric.overly_complicated_garbage.items.HeldPlasticBagItem;
 import com.thesatyric.overly_complicated_garbage.items.PlasticBagItem;
 import net.minecraft.block.Block;
+import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.component.type.EquippableComponent;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -13,6 +23,7 @@ import net.minecraft.item.equipment.ArmorMaterial;
 import net.minecraft.item.equipment.EquipmentAsset;
 import net.minecraft.item.equipment.EquipmentAssetKeys;
 import net.minecraft.item.equipment.EquipmentType;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -21,8 +32,12 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
+import org.spongepowered.asm.mixin.injection.At;
 
+import javax.xml.crypto.Data;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 public class OCGarbageItems {
@@ -55,6 +70,11 @@ public class OCGarbageItems {
     public static final Item PLASTIC_BAG = register("plastic_bag", PlasticBagItem::new, new PlasticBagItem.Settings()
             .component(DataComponentTypes.EQUIPPABLE, EquippableComponent.builder(EquipmentSlot.HEAD).model(PLASTIC_BAG_KEY).swappable(false).build())
             .maxCount(1));
+    public static final Item BROKEN_PLASTIC_BAG = register("broken_plastic_bag", Item::new, new Item.Settings().maxCount(1));
+    public static final Item HELD_PLASTIC_BAG = register("held_plastic_bag", HeldPlasticBagItem::new, new Item.Settings()
+            .maxCount(1)
+            .component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT)
+            .attributeModifiers(AttributeModifiersComponent.builder().add(EntityAttributes.MOVEMENT_SPEED, new EntityAttributeModifier(Identifier.ofVanilla("movement_speed"), -0.05f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.ANY).build()));
 
 
     public static void initialize()

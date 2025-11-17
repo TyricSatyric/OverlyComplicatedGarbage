@@ -2,11 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " # ",
-    "O O",
-    "OOO"
+    "SOS",
+    " S "
   ],
   "key": {
-    "#": "minecraft:string",
+    "#": "overly_complicated_garbage:broken_plastic_bag",
+    "S": "minecraft:string",
     "O": "overly_complicated_garbage:eco_friendly_plastic"
   },
   "result": {

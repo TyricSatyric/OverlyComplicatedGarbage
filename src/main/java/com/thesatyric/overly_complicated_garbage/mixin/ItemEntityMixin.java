@@ -1,8 +1,15 @@
 package com.thesatyric.overly_complicated_garbage.mixin;
 
+import com.thesatyric.overly_complicated_garbage.OCGarbageBlocks;
 import com.thesatyric.overly_complicated_garbage.OCGarbageComponents;
 import com.thesatyric.overly_complicated_garbage.OCGarbageItems;
 import com.thesatyric.overly_complicated_garbage.OverlyComplicatedGarbage;
+import com.thesatyric.overly_complicated_garbage.blocks.block_entities.GarbageBagBlockEntity;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.ComponentType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -11,8 +18,11 @@ import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Position;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionTypes;
@@ -49,6 +59,7 @@ public abstract class ItemEntityMixin extends Entity {
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ItemEntity;discard()V", ordinal = 1))
     public void tick(ItemEntity instance)
     {
+
         if (canDespawn)
         {
             this.remove(Entity.RemovalReason.DISCARDED);
@@ -62,6 +73,27 @@ public abstract class ItemEntityMixin extends Entity {
 
     @Inject(method = "tick", at = @At("TAIL"))
     public void separateWhenWater(CallbackInfo ci) {
+        ItemEntity instance = (ItemEntity) (Object)this;
+        if (instance.getStack().getItem() == OCGarbageItems.HELD_PLASTIC_BAG && instance.getVelocity().y == 0 && age > 10)
+        {
+            if (!instance.getWorld().isClient)
+            {
+                instance.getStack().get(DataComponentTypes.CONTAINER);
+                BlockState state = OCGarbageBlocks.GARBAGE_BAG.getDefaultState();
+                BlockPos pos = BlockPos.ofFloored(getX(), getY(), getZ());
+                instance.getWorld().setBlockState(pos, state);
+                Iterable<ItemStack> items = instance.getStack().getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT).iterateNonEmpty();
+                BlockEntity be = instance.getWorld().getBlockEntity(pos);
+                if (be instanceof GarbageBagBlockEntity)
+                {
+                    for (ItemStack iStack : items)
+                    {
+                        ((GarbageBagBlockEntity) be).addItem(instance.getWorld(), pos, iStack, state);
+                    }
+                }
+                this.remove(RemovalReason.DISCARDED);
+            }
+        }
         if (getStack().getItem() == OCGarbageItems.CACTUS_PRICKLES)
         {
             getStack().set(OCGarbageComponents.PRICKLY_COMPONENT, Boolean.TRUE);
