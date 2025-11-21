@@ -41,6 +41,7 @@ public class OverlyComplicatedGarbage implements ModInitializer {
             itemGroup.add(OCGarbageItems.ECO_FRIENDLY_PLASTIC_BLOCK);
             itemGroup.add(OCGarbageItems.PLASTIC_BAG);
             itemGroup.add(OCGarbageItems.BROKEN_PLASTIC_BAG);
+            itemGroup.add(OCGarbageItems.TRASH_CAN);
         });
         LOGGER.info("Get ready to overcomplicate your garbage!");
     }

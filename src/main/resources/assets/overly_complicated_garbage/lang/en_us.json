@@ -9,6 +9,7 @@
   "item.overly_complicated_garbage.plastic_bag": "Eco-Friendly Plastic Bag",
   "item.overly_complicated_garbage.broken_plastic_bag": "Broken Plastic Bag",
   "item.overly_complicated_garbage.held_plastic_bag": "Filled Plastic Bag",
+  "item.overly_complicated_garbage.trash_can": "Trash Can",
   "stat.overly_complicated_garbage.interact_with_biomass_processor": "Interactions With Biomass Processor",
   "gui.recipebook.toggleRecipes.processable": "Showing Processable",
   "itemGroup.overly_complicated_garbage": "Overly Complicated Garbage",

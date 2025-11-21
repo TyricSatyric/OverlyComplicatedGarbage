@@ -42,8 +42,7 @@ public class GarbageBag extends BlockWithEntity {
     
     public GarbageBag(Settings settings) {
         super(settings);
-        this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(OPEN, true)));
-        this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FILL, 0)));
+        this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FILL, 0).with(OPEN, true)));
     }
     public BlockState withFill(int amount) {
         return (BlockState)this.getDefaultState().with(this.getFill(), amount);

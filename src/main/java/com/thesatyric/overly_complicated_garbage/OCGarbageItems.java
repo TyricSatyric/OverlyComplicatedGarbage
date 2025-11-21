@@ -75,7 +75,7 @@ public class OCGarbageItems {
             .maxCount(1)
             .component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT)
             .attributeModifiers(AttributeModifiersComponent.builder().add(EntityAttributes.MOVEMENT_SPEED, new EntityAttributeModifier(Identifier.ofVanilla("movement_speed"), -0.05f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.ANY).build()));
-
+    public static final Item TRASH_CAN = register("trash_can", OCGarbageBlocks.TRASH_CAN, new BlockItem.Settings());
 
     public static void initialize()
     {

@@ -1,9 +1,6 @@
 package com.thesatyric.overly_complicated_garbage;
 
-import com.thesatyric.overly_complicated_garbage.blocks.AshBlock;
-import com.thesatyric.overly_complicated_garbage.blocks.BiomassProcessor;
-import com.thesatyric.overly_complicated_garbage.blocks.CactusPricklesBlock;
-import com.thesatyric.overly_complicated_garbage.blocks.GarbageBag;
+import com.thesatyric.overly_complicated_garbage.blocks.*;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.Item;
@@ -53,12 +50,16 @@ public class OCGarbageBlocks {
                     .strength(0f)
                     .pistonBehavior(PistonBehavior.DESTROY)
                     .sounds(BlockSoundGroup.MOSS_BLOCK));
-    public static  final Block GARBAGE_BAG = register("garbage_bag", GarbageBag::new, AbstractBlock.Settings.create()
+    public static final Block GARBAGE_BAG = register("garbage_bag", GarbageBag::new, AbstractBlock.Settings.create()
             .nonOpaque()
             .pistonBehavior(PistonBehavior.BLOCK)
             .sounds(BlockSoundGroup.AZALEA_LEAVES)
-            .hardness(0.5f)
-            .nonOpaque());
+            .hardness(0.5f));
+    public static final Block TRASH_CAN = register("trash_can", TrashCanBlock::new, AbstractBlock.Settings.create()
+            .nonOpaque()
+            .pistonBehavior(PistonBehavior.BLOCK)
+            .sounds(BlockSoundGroup.STONE)
+            .hardness(0.8f));
 
 
 

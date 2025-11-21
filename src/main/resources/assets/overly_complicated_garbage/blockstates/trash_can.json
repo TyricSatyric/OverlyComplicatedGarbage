@@ -1,0 +1,36 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "overly_complicated_garbage:block/trash_can"
+      }
+    },
+    {
+      "when": {
+        "has_bag": "true",
+        "open": "true"
+      },
+      "apply": {
+        "model": "overly_complicated_garbage:block/trash_can_bag_open"
+      }
+    },
+    {
+      "when": {
+        "has_bag": "true",
+        "has_items": "true"
+      },
+      "apply": {
+        "model": "overly_complicated_garbage:block/trash_can_bag_filler"
+      }
+    },
+    {
+      "when": {
+        "has_bag": "true",
+        "open": "false"
+      },
+      "apply": {
+        "model": "overly_complicated_garbage:block/trash_can_bag_closed"
+      }
+    }
+  ]
+}
