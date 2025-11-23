@@ -76,11 +76,11 @@ public abstract class ItemEntityMixin extends Entity {
         ItemEntity instance = (ItemEntity) (Object)this;
         if (instance.getStack().getItem() == OCGarbageItems.HELD_PLASTIC_BAG && instance.getVelocity().y == 0 && age > 10)
         {
-            if (!instance.getWorld().isClient)
+            BlockPos pos = BlockPos.ofFloored(getX(), getY(), getZ());
+            if (!instance.getWorld().isClient && instance.getWorld().getBlockState(pos).isAir())
             {
                 instance.getStack().get(DataComponentTypes.CONTAINER);
                 BlockState state = OCGarbageBlocks.GARBAGE_BAG.getDefaultState();
-                BlockPos pos = BlockPos.ofFloored(getX(), getY(), getZ());
                 instance.getWorld().setBlockState(pos, state);
                 Iterable<ItemStack> items = instance.getStack().getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT).iterateNonEmpty();
                 BlockEntity be = instance.getWorld().getBlockEntity(pos);

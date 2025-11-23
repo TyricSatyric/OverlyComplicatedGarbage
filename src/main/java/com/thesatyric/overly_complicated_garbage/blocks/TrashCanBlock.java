@@ -1,25 +1,38 @@
 package com.thesatyric.overly_complicated_garbage.blocks;
 
 import com.mojang.serialization.MapCodec;
+import com.thesatyric.overly_complicated_garbage.OCGarbageItems;
 import com.thesatyric.overly_complicated_garbage.OCProperties;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.ShapeContext;
+import com.thesatyric.overly_complicated_garbage.OverlyComplicatedGarbage;
+import com.thesatyric.overly_complicated_garbage.blocks.block_entities.GarbageBagBlockEntity;
+import com.thesatyric.overly_complicated_garbage.blocks.block_entities.TrashCanBlockEntity;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ContainerComponent;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.function.BooleanBiFunction;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EmptyStackException;
 import java.util.stream.Stream;
 
 public class TrashCanBlock extends BlockWithEntity {
@@ -32,20 +45,107 @@ public class TrashCanBlock extends BlockWithEntity {
     static final VoxelShape FILLER_SHAPE;
     public TrashCanBlock(Settings settings) {
         super(settings);
-        this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(HAS_BAG, false).with(HAS_GARBAGE, false).with(OPEN, false)));
+        this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(HAS_BAG, false).with(HAS_GARBAGE, false).with(OPEN, true)));
     }
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return null;
+        return createCodec(TrashCanBlock::new);
     }
 
     @Override
     public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return new TrashCanBlockEntity(pos, state);
     }
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(new Property[]{HAS_BAG, OPEN, HAS_GARBAGE});
+    }
+
+    @Override
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        if (!(world.getBlockEntity(pos) instanceof TrashCanBlockEntity trashCanBlockEntity)) {
+            return super.onUse(state, world, pos, player, hit);
+        }
+        Item held_item = player.getStackInHand(player.getActiveHand()).getItem();
+        OverlyComplicatedGarbage.LOGGER.info(held_item.toString());
+        if (held_item != Items.AIR) {
+            if (held_item == OCGarbageItems.PLASTIC_BAG || held_item == OCGarbageItems.HELD_PLASTIC_BAG)
+            {
+                if (state.get(HAS_BAG))
+                {
+                    if(held_item == OCGarbageItems.PLASTIC_BAG)
+                    {
+                        trashCanBlockEntity.addItem(world, pos, player.getStackInHand(player.getActiveHand()), state);
+                        world.playSound(player, pos, SoundEvents.ITEM_BUNDLE_INSERT, SoundCategory.BLOCKS);
+                        return ActionResult.SUCCESS;
+                    }
+                    return ActionResult.PASS;
+                }
+                if (held_item == OCGarbageItems.HELD_PLASTIC_BAG)
+                {
+                    Iterable<ItemStack> items = player.getStackInHand(player.getActiveHand()).getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT).iterateNonEmpty();
+                    for (ItemStack stack : items)
+                    {
+                        trashCanBlockEntity.addItem(world, pos, stack, state.with(HAS_BAG, true));
+                    }
+                    player.getStackInHand(player.getActiveHand()).setCount(0);
+                }
+                else
+                {
+                    world.setBlockState(pos, state.with(HAS_BAG, true).with(OPEN, true));
+                    player.getStackInHand(player.getActiveHand()).decrementUnlessCreative(1, player);
+                }
+                return ActionResult.SUCCESS;
+            }
+            if (!state.get(OPEN) || trashCanBlockEntity.itemCount == trashCanBlockEntity.MAX_ITEMS || !state.get(HAS_BAG))
+                return ActionResult.PASS;
+            trashCanBlockEntity.addItem(world, pos, player.getStackInHand(player.getActiveHand()), state);
+            world.playSound(player, pos, SoundEvents.ITEM_BUNDLE_INSERT, SoundCategory.BLOCKS);
+        }
+        else {
+
+            OverlyComplicatedGarbage.LOGGER.info("Using without item");
+            if (!state.get(HAS_BAG))
+                return ActionResult.PASS;
+            world.setBlockState(pos, state.with(OPEN, !state.get(OPEN)));
+            world.playSound(player, pos, SoundEvents.ITEM_BUNDLE_DROP_CONTENTS, SoundCategory.BLOCKS);
+            if (player.isSneaking() && state.get(HAS_BAG))
+            {
+                ItemStack stack = new ItemStack(OCGarbageItems.HELD_PLASTIC_BAG);
+                stack.set(DataComponentTypes.CONTAINER, ContainerComponent.fromStacks(trashCanBlockEntity.getItems()));
+                player.setStackInHand(player.getActiveHand(), stack);
+                world.setBlockState(pos, state.with(HAS_BAG, false).with(HAS_GARBAGE, false).with(OPEN, false));
+                trashCanBlockEntity.clear();
+            }
+        }
+        return ActionResult.SUCCESS;
+
+    }
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        TrashCanBlockEntity entity = (TrashCanBlockEntity) world.getBlockEntity(pos);
+        if (entity == null)
+            return;
+        if (entity.itemCount > 0) {
+            world.setBlockState(pos, state.with(HAS_GARBAGE, true).with(HAS_BAG, true).with(OPEN, false));
+        }
+        else {
+            world.setBlockState(pos, state.with(HAS_GARBAGE, false));
+        }
+        super.onPlaced(world, pos, state, placer, itemStack);
+    }
+
+    @Override
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (!(world.getBlockEntity(pos) instanceof TrashCanBlockEntity trashCanBlockEntity)) {
+            return super.onBreak(world, pos, state, player);
+        }
+        trashCanBlockEntity.dropEverything(world, pos);
+        if (state.get(HAS_BAG)) {
+            ItemEntity entity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(OCGarbageItems.PLASTIC_BAG));
+            world.spawnEntity(entity);
+        }
+        return super.onBreak(world, pos, state, player);
     }
 
     @Override
