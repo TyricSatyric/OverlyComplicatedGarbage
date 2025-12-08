@@ -60,6 +60,12 @@ public class OCGarbageBlocks {
             .pistonBehavior(PistonBehavior.BLOCK)
             .sounds(BlockSoundGroup.STONE)
             .hardness(0.8f));
+    public static final Block GARBAGE_BLOCK = register("garbage_block", Block::new, AbstractBlock.Settings.create()
+            .sounds(BlockSoundGroup.SLIME)
+            .hardness(0.4f));
+    public static final Block SUSPICIOUS_GARBAGE_BLOCK = register("suspicious_garbage_block", SuspiciousGarbageBlock::new, AbstractBlock.Settings.create()
+            .sounds(BlockSoundGroup.SLIME)
+            .hardness(0.6f));
 
 
 

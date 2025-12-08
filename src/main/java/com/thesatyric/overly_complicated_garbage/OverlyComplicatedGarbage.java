@@ -3,6 +3,8 @@ package com.thesatyric.overly_complicated_garbage;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper;
+import net.minecraft.SharedConstants;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -10,6 +12,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.poi.PointOfInterestType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,12 +29,14 @@ public class OverlyComplicatedGarbage implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        SharedConstants.isDevelopment = true;
         OCGarbageComponents.initialize();
         OCGarbageParticles.initialize();
         OCProperties.initialize();
         OCGBlockEntities.initialize();
         OCGarbageBlocks.initialize();
         OCGarbageItems.initialize();
+        OCGEntities.init();
         Registry.register(Registries.ITEM_GROUP, GARBAGE_ITEM_GROUP_KEY, GARBAGE_ITEM_GROUP);
         ItemGroupEvents.modifyEntriesEvent(GARBAGE_ITEM_GROUP_KEY).register(itemGroup ->{
             itemGroup.add(OCGarbageItems.ASH_DUST);
@@ -42,6 +47,8 @@ public class OverlyComplicatedGarbage implements ModInitializer {
             itemGroup.add(OCGarbageItems.PLASTIC_BAG);
             itemGroup.add(OCGarbageItems.BROKEN_PLASTIC_BAG);
             itemGroup.add(OCGarbageItems.TRASH_CAN);
+            itemGroup.add(OCGarbageItems.GARBAGE_BLOCK);
+            itemGroup.add(OCGarbageItems.SUSPICIOUS_GARBAGE_BLOCK);
         });
         LOGGER.info("Get ready to overcomplicate your garbage!");
     }

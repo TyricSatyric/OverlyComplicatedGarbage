@@ -64,7 +64,7 @@ public class GarbageBagBlockEntity extends BlockEntity implements Inventory {
         else {
             itemsToAdd = stack.getCount();
         }
-        for (ItemStack item : items) {
+        /*for (ItemStack item : items) {
             if (item.getItem() == stack.getItem())
             {
                 if (item.getCount() < item.getMaxCount() - itemsToAdd)
@@ -94,8 +94,9 @@ public class GarbageBagBlockEntity extends BlockEntity implements Inventory {
             }
             markDirty();
             return;
-        }
-        ItemStack stackToAdd = new ItemStack(stack.getItem(), itemsToAdd);
+        }*/
+        ItemStack stackToAdd = stack.copy();
+        stackToAdd.setCount(itemsToAdd);
         items.set(latestSlot, stackToAdd);
         stack.decrement(itemsToAdd);
         latestSlot += 1;
@@ -206,6 +207,10 @@ public class GarbageBagBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public void clear() {
+        itemCount = 0;
+        latestSlot = 0;
         this.items.clear();
     }
+
+
 }

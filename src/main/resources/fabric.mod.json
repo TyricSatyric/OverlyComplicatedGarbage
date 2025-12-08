@@ -6,6 +6,7 @@
   "description": "Have you ever wondered what happens with your garbage in real life? Stuff just doesn't \"despawn\" out of existance, this mod adds that *painful* experience in to Minecraft!",
   "authors": [],
   "contact": {},
+  "accessWidener": "overly_complicated_garbage.accesswidener",
   "license": "GPL-3.0",
   "icon": "assets/overly_complicated_garbage/icon.png",
   "environment": "*",

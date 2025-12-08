@@ -76,7 +76,8 @@ public class OCGarbageItems {
             .component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT)
             .attributeModifiers(AttributeModifiersComponent.builder().add(EntityAttributes.MOVEMENT_SPEED, new EntityAttributeModifier(Identifier.ofVanilla("movement_speed"), -0.05f, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.ANY).build()));
     public static final Item TRASH_CAN = register("trash_can", OCGarbageBlocks.TRASH_CAN, new BlockItem.Settings());
-
+    public static final Item GARBAGE_BLOCK = register("garbage_block", OCGarbageBlocks.GARBAGE_BLOCK, new BlockItem.Settings());
+    public static final Item SUSPICIOUS_GARBAGE_BLOCK = register("suspicious_garbage_block", OCGarbageBlocks.SUSPICIOUS_GARBAGE_BLOCK, new BlockItem.Settings());
     public static void initialize()
     {
 

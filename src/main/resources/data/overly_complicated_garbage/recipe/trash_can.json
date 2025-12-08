@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "O O",
+    "O O",
+    "OOO"
+  ],
+  "key": {
+    "O": "overly_complicated_garbage:eco_friendly_plastic_block"
+  },
+  "result": {
+    "id": "overly_complicated_garbage:trash_can",
+    "count": 1
+  }
+}

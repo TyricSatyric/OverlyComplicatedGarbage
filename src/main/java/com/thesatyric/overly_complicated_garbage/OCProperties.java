@@ -13,6 +13,7 @@ public class OCProperties {
     public static final IntProperty GARBAGE_FILL = IntProperty.of("fill", 0, 2);
     public static final BooleanProperty HAS_GARBAGE = BooleanProperty.of("has_items");
     public static final BooleanProperty HAS_BAG = BooleanProperty.of("has_bag");
+    public static final BooleanProperty STICKY = BooleanProperty.of("sticky");
     public static final Identifier INTERACTED_WITH_BIOMASS_PROCESSOR = register("interact_with_biomass_processor", StatFormatter.DEFAULT);
     public static void initialize()
     {

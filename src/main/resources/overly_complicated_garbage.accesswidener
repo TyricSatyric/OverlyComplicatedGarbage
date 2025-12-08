@@ -1,3 +1,4 @@
 accessWidener v1 named
 
-accessible class net/minecraft/recipe/AbstractCookingRecipe$Serializer
+accessible field net/minecraft/block/entity/BrushableBlockEntity item Lnet/minecraft/item/ItemStack;
+
