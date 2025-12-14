@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
-      "model": "overly_complicated_garbage:block/garbage_block"
-    }
+    "": [
+      { "model": "overly_complicated_garbage:block/garbage_block"},
+      { "model": "overly_complicated_garbage:block/garbage_block", "y":  90},
+      { "model": "overly_complicated_garbage:block/garbage_block", "y":  180},
+      { "model": "overly_complicated_garbage:block/garbage_block", "y":  270}
+    ]
   }
 }

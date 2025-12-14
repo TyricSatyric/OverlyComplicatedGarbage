@@ -1,5 +1,7 @@
 package com.thesatyric.overly_complicated_garbage;
 
+import com.thesatyric.overly_complicated_garbage.world.gen.DumpRegion;
+import com.thesatyric.overly_complicated_garbage.world.gen.OCGMaterialRules;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -15,8 +17,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.poi.PointOfInterestType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import terrablender.api.Regions;
+import terrablender.api.SurfaceRuleManager;
+import terrablender.api.TerraBlenderApi;
 
-public class OverlyComplicatedGarbage implements ModInitializer {
+public class OverlyComplicatedGarbage implements ModInitializer, TerraBlenderApi {
     public static final String MOD_ID = "overly_complicated_garbage";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
@@ -51,5 +56,12 @@ public class OverlyComplicatedGarbage implements ModInitializer {
             itemGroup.add(OCGarbageItems.SUSPICIOUS_GARBAGE_BLOCK);
         });
         LOGGER.info("Get ready to overcomplicate your garbage!");
+    }
+
+    @Override
+    public void onTerraBlenderInitialized() {
+        Regions.register(new DumpRegion(Identifier.of(MOD_ID, "overworld"), 2));
+        TerraBlenderApi.super.onTerraBlenderInitialized();
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, OCGMaterialRules.makeRules());
     }
 }

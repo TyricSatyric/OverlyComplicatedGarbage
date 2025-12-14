@@ -40,27 +40,18 @@ public class SuspiciousGarbageBlockEntity extends BlockEntity {
 
     public SuspiciousGarbageBlockEntity(BlockPos pos, BlockState state) {
         super(OCGBlockEntities.SUSPICIOUS_GARBAGE_BLOCK_ENTITY, pos, state);
-        if (getWorld() instanceof ServerWorld serverWorld)
-        {
-            List<ItemStack> items = TrashedItemsStateManager.get(serverWorld).items;
-            if (items.isEmpty())
-                this.item = ItemStack.EMPTY;
-            else
-                this.item = items.get(serverWorld.random.nextBetweenExclusive(0, items.size()));
-        }
     }
+
 
     public boolean brush(long worldTime, ServerWorld world, PlayerEntity player, Direction hitDirection, ItemStack brush) {
         if (this.hitDirection == null) {
             this.hitDirection = hitDirection;
         }
-        OverlyComplicatedGarbage.LOGGER.info("BRUSHING!");
         this.nextDustTime = worldTime + 40L;
         if (worldTime < this.nextBrushTime) {
             return false;
         } else {
             this.nextBrushTime = worldTime + 10L;
-            this.generateItem(world, player, brush);
             int i = this.getDustedLevel();
             if (++this.brushesCount >= 10) {
                 this.finishBrushing(world, player, brush);
@@ -79,56 +70,21 @@ public class SuspiciousGarbageBlockEntity extends BlockEntity {
         }
     }
 
-    private void generateItem(ServerWorld world, PlayerEntity player, ItemStack brush) {
-        if (this.item == null)
-        {
-            if (getWorld() instanceof ServerWorld serverWorld)
-            {
-                List<ItemStack> items = TrashedItemsStateManager.get(serverWorld).items;
-                if (items.isEmpty())
-                    this.item = ItemStack.EMPTY;
-                else
-                    this.item = items.get(serverWorld.random.nextBetweenExclusive(0, items.size()));
-            }
-            this.markDirty();
-        }
-    }
 
     private void finishBrushing(ServerWorld world, PlayerEntity player, ItemStack brush) {
-        this.spawnItem(world, player, brush);
-        BlockState blockState = this.getCachedState();
-        world.syncWorldEvent(3008, this.getPos(), Block.getRawIdFromState(blockState));
-        Block block = this.getCachedState().getBlock();
-        Block block2;
-        if (block instanceof SuspiciousGarbageBlock suspiciousGarbageBlock) {
-            block2 = suspiciousGarbageBlock.getBaseBlock();
-        } else {
-            block2 = Blocks.AIR;
+        if (getWorld() instanceof ServerWorld serverWorld)
+        {
+            List<ItemStack> items = TrashedItemsStateManager.get(serverWorld).items;
+            OverlyComplicatedGarbage.LOGGER.info(items.toString());
+            if (!items.isEmpty()){
+                ItemStack itemStack = items.remove(serverWorld.random.nextBetweenExclusive(0, items.size()));
+                world.spawnEntity(new ItemEntity(world, this.pos.getX()-0.5, this.pos.getY()-0.5, this.pos.getZ()-0.5, itemStack));
+                TrashedItemsStateManager.get(serverWorld).writeNbt(new NbtCompound(), serverWorld.getRegistryManager());
+            }
         }
-
-        world.setBlockState(this.pos, block2.getDefaultState(), 3);
+        world.breakBlock(this.pos, false);
     }
 
-    private void spawnItem(ServerWorld world, PlayerEntity player, ItemStack brush) {
-        this.generateItem(world, player, brush);
-        if (this.item != null) {
-            if(item.isEmpty())
-                return;
-            double d = (double) EntityType.ITEM.getWidth();
-            double e = (double)1.0F - d;
-            double f = d / (double)2.0F;
-            Direction direction = (Direction) Objects.requireNonNullElse(this.hitDirection, Direction.UP);
-            BlockPos blockPos = this.pos.offset(direction, 1);
-            double g = (double)blockPos.getX() + (double)0.5F * e + f;
-            double h = (double)blockPos.getY() + (double)0.5F + (double)(EntityType.ITEM.getHeight() / 2.0F);
-            double i = (double)blockPos.getZ() + (double)0.5F * e + f;
-            ItemEntity itemEntity = new ItemEntity(world, g, h, i, this.item.split(world.random.nextInt(21) + 10));
-            itemEntity.setVelocity(Vec3d.ZERO);
-            world.spawnEntity(itemEntity);
-            this.item = ItemStack.EMPTY;
-        }
-
-    }
 
     public void scheduledTick(ServerWorld world) {
         if (this.brushesCount != 0 && world.getTime() >= this.nextDustTime) {

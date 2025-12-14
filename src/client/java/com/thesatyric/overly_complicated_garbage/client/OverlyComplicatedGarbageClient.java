@@ -28,4 +28,5 @@ public class OverlyComplicatedGarbageClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(GARBAGE_TRUCK, GarbageTruckEntityModel::getTexturedModelData);
         ParticleFactoryRegistry.getInstance().register(OCGarbageParticles.ASH_DUST_PARTICLE, AshDustParticle.Factory::new);
     }
+    
 }

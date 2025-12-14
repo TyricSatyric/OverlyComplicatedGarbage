@@ -1,5 +1,6 @@
 package com.thesatyric.overly_complicated_garbage.misc;
 
+import com.thesatyric.overly_complicated_garbage.OverlyComplicatedGarbage;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.PersistentState;
 
@@ -10,6 +11,8 @@ public class TrashedItemsStateManager {
 
     public static TrashedItemsState get(ServerWorld world)
     {
+        OverlyComplicatedGarbage.LOGGER.info("Get Items");
         return world.getPersistentStateManager().getOrCreate(TrashedItemsState.TYPE, ID);
     }
+
 }

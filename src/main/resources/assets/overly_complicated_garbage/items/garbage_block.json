@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "overly_complicated_garbage:block/garbage_block"
+  }
+}

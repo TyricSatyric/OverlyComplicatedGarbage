@@ -19,6 +19,9 @@
     ],
     "main": [
       "com.thesatyric.overly_complicated_garbage.OverlyComplicatedGarbage"
+    ],
+    "terrablender": [
+      "com.thesatyric.overly_complicated_garbage.OverlyComplicatedGarbage"
     ]
   },
   "mixins": [

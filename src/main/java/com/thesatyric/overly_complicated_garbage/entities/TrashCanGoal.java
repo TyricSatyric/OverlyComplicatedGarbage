@@ -12,6 +12,8 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -92,9 +94,13 @@ public class TrashCanGoal extends Goal {
                 {
                     for (ItemStack stack : items)
                     {
-                        TrashedItemsStateManager.get(serverWorld).items.add(stack.copy());
+                        if (stack.getItem() != Items.AIR)
+                            TrashedItemsStateManager.get(serverWorld).items.add(stack.copy());
                     }
+                    TrashedItemsStateManager.get(serverWorld).writeNbt(new NbtCompound(), serverWorld.getRegistryManager());
+                    OverlyComplicatedGarbage.LOGGER.info(TrashedItemsStateManager.get(serverWorld).items.toString());
                     TrashedItemsStateManager.get(serverWorld).markDirty();
+
                 }
                 be.clear();
             }
