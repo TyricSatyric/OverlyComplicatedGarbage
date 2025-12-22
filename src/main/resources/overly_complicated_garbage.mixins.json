@@ -7,6 +7,7 @@
     "ArmorSlotMixin",
     "BrushItemMixin",
     "EquippableComponentMixin",
+    "GameRulesMixin",
     "ItemEntityMixin",
     "ItemMixin",
     "PlayerEntityMixin"

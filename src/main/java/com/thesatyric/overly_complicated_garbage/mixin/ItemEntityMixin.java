@@ -23,6 +23,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionTypes;
@@ -117,9 +118,18 @@ public abstract class ItemEntityMixin extends Entity {
 
         if (this.isAlwaysInvulnerableTo(source)) {
             return false;
+        } else if (source.isOf(DamageTypes.EXPLOSION) || source.isOf(DamageTypes.PLAYER_EXPLOSION))
+        {
+            ((ItemEntity)(Object)this).addVelocity((random.nextFloat()-0.5)*1.3, random.nextFloat()*1.3, (random.nextFloat()-0.5)*1.3);
+            return false;
         } else if (!world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) && source.getAttacker() instanceof MobEntity) {
             return false;
-        } else if (!this.getStack().takesDamageFrom(source)) {
+        }  else if (!this.getStack().takesDamageFrom(source)) {
+            return false;
+        } else if (source.isOf(DamageTypes.FALLING_ANVIL))
+        {
+            ((ItemEntity)(Object)this).setPosition(new Vec3d(((ItemEntity)(Object)this).getX(), ((ItemEntity)(Object)this).getY()+2, ((ItemEntity)(Object)this).getZ()));
+            ((ItemEntity)(Object)this).addVelocity((random.nextFloat()-0.5)*1.2, random.nextFloat()*1.2, (random.nextFloat()-0.5)*1.2);
             return false;
         } else if (source.isOf(DamageTypes.CACTUS))
         {

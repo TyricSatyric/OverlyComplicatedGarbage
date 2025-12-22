@@ -13,7 +13,9 @@
   "item.overly_complicated_garbage.garbage_block": "Garbage Block",
   "item.overly_complicated_garbage.suspicious_garbage_block": "Suspicious Garbage Block",
   "stat.overly_complicated_garbage.interact_with_biomass_processor": "Interactions With Biomass Processor",
+  "entity.overly_complicated_garbage.garbage_truck": "Garbage Truck",
   "gui.recipebook.toggleRecipes.processable": "Showing Processable",
   "itemGroup.overly_complicated_garbage": "Overly Complicated Garbage",
-  "death.attack.bag": "%s suffocated with a plastic bag."
+  "death.attack.bag": "%s suffocated with a plastic bag.",
+  "biome.overly_complicated_garbage.garbage_dump": "Garbage Dump"
 }

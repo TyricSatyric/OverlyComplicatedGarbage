@@ -66,16 +66,6 @@ public class SuspiciousGarbageBlock extends BlockWithEntity {
             suspiciousGarbageBlockEntity.scheduledTick(world);
         }
 
-        if (FallingBlock.canFallThrough(world.getBlockState(pos.down())) && pos.getY() >= world.getBottomY()) {
-            FallingBlockEntity fallingBlockEntity = FallingBlockEntity.spawnFromBlock(world, pos, state);
-            fallingBlockEntity.setDestroyedOnLanding();
-        }
-    }
-
-    public void onDestroyedOnLanding(World world, BlockPos pos, FallingBlockEntity fallingBlockEntity) {
-        Vec3d vec3d = fallingBlockEntity.getBoundingBox().getCenter();
-        world.syncWorldEvent(2001, BlockPos.ofFloored(vec3d), Block.getRawIdFromState(fallingBlockEntity.getBlockState()));
-        world.emitGameEvent(fallingBlockEntity, GameEvent.BLOCK_DESTROY, vec3d);
     }
 
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {

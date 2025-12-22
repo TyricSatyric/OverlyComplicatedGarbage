@@ -59,6 +59,7 @@ public class OCGarbageBlocks {
             .nonOpaque()
             .pistonBehavior(PistonBehavior.BLOCK)
             .sounds(BlockSoundGroup.STONE)
+            .ticksRandomly()
             .hardness(0.8f));
     public static final Block GARBAGE_BLOCK = register("garbage_block", Block::new, AbstractBlock.Settings.create()
             .sounds(BlockSoundGroup.SLIME)

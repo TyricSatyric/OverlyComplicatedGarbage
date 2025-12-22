@@ -16,7 +16,7 @@ import net.minecraft.world.poi.PointOfInterestType;
 public class OCGEntities {
     public static final EntityType<GarbageTruckEntity> TRUCK = registerEntity(OverlyComplicatedGarbage.MOD_ID,
             "garbage_truck",
-            EntityType.Builder.create(GarbageTruckEntity::new, SpawnGroup.CREATURE).dimensions(1.5f, 1.0f));
+            EntityType.Builder.create(GarbageTruckEntity::new, SpawnGroup.MISC).dimensions(1.5f, 1.0f));
 
     public static final PointOfInterestType TRASH_CANS_POI =
             PointOfInterestHelper.register(Identifier.of(OverlyComplicatedGarbage.MOD_ID, "trash_cans_poi"), 0, 1, OCGarbageBlocks.TRASH_CAN);

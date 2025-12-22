@@ -1,11 +1,14 @@
 package com.thesatyric.overly_complicated_garbage.blocks.block_entities;
 
 import com.thesatyric.overly_complicated_garbage.OCGBlockEntities;
+import com.thesatyric.overly_complicated_garbage.OCGEntities;
 import com.thesatyric.overly_complicated_garbage.OverlyComplicatedGarbage;
 import com.thesatyric.overly_complicated_garbage.blocks.GarbageBag;
 import com.thesatyric.overly_complicated_garbage.blocks.TrashCanBlock;
+import com.thesatyric.overly_complicated_garbage.entities.GarbageTruckEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,19 +20,23 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.event.Vibrations;
 
 import java.util.Objects;
 import java.util.Random;
 
-public class TrashCanBlockEntity extends BlockEntity implements Inventory {
+public class TrashCanBlockEntity extends BlockEntity implements Inventory{
     private DefaultedList<ItemStack> items;
     public final int MAX_ITEMS = 128;
     public int itemCount = 0;
     private int latestSlot = 0;
+
     public TrashCanBlockEntity(BlockPos pos, BlockState state) {
         super(OCGBlockEntities.TRASH_CAN_BLOCK_ENTITY, pos, state);
         this.items = DefaultedList.ofSize(128, ItemStack.EMPTY);
     }
+
+
 
     public DefaultedList<ItemStack> getItems()
     {
@@ -187,4 +194,5 @@ public class TrashCanBlockEntity extends BlockEntity implements Inventory {
         latestSlot = 0;
         this.items.clear();
     }
+
 }

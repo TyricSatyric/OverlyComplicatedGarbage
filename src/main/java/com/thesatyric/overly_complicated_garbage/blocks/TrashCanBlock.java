@@ -1,18 +1,23 @@
 package com.thesatyric.overly_complicated_garbage.blocks;
 
 import com.mojang.serialization.MapCodec;
+import com.thesatyric.overly_complicated_garbage.OCGEntities;
 import com.thesatyric.overly_complicated_garbage.OCGarbageItems;
 import com.thesatyric.overly_complicated_garbage.OCProperties;
 import com.thesatyric.overly_complicated_garbage.OverlyComplicatedGarbage;
 import com.thesatyric.overly_complicated_garbage.blocks.block_entities.GarbageBagBlockEntity;
 import com.thesatyric.overly_complicated_garbage.blocks.block_entities.TrashCanBlockEntity;
+import com.thesatyric.overly_complicated_garbage.entities.GarbageTruckEntity;
+import com.thesatyric.overly_complicated_garbage.world.gen.features.GarbagePileFeature;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.command.argument.ParticleEffectArgumentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ContainerComponent;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FireworkRocketItem;
 import net.minecraft.item.Item;
@@ -20,7 +25,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -30,16 +38,22 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.TypeFilter;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.text.html.HTML;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class TrashCanBlock extends BlockWithEntity {
@@ -73,6 +87,38 @@ public class TrashCanBlock extends BlockWithEntity {
         builder.add(new Property[]{HAS_BAG, OPEN, HAS_GARBAGE, STICKY});
     }
 
+    @Override
+    protected boolean hasRandomTicks(BlockState state) {
+        return state.get(HAS_GARBAGE);
+    }
+
+    @Override
+    protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        List<GarbageTruckEntity> garbageTrucks = world.getEntitiesByType(TypeFilter.instanceOf(GarbageTruckEntity.class),  Box.of(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), 30, 100, 30), EntityPredicates.VALID_ENTITY);
+        if(random.nextDouble() > 0.5 && garbageTrucks.size() < 3){
+            OverlyComplicatedGarbage.LOGGER.info("spawn truck");
+            int xRand = world.getRandom().nextInt(10);
+            int zRand = world.getRandom().nextInt(10);
+            if (xRand < 3) xRand= 3;
+            if (zRand < 3) zRand= 3;
+            xRand *= random.nextInt(1)*2-1;
+            zRand *= random.nextInt(1)*2-1;
+            int x = pos.getX()+xRand;
+            int z = pos.getZ()+zRand;
+            int y = world.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z);
+            y++;
+            GarbageTruckEntity truck = new GarbageTruckEntity(OCGEntities.TRUCK, world);
+            truck.refreshPositionAndAngles(x + 0.5, y, z + 0.5, world.random.nextFloat() * 360F, 0);
+            truck.initialize(
+                    world,
+                    world.getLocalDifficulty(new BlockPos(x, y, z)),
+                    SpawnReason.NATURAL,
+                    null
+            );
+            world.spawnEntity(truck);
+        }
+        super.randomTick(state, world, pos, random);
+    }
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
