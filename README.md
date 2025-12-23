@@ -19,7 +19,9 @@ I'm glad you asked!
 
 
 HELP! I accidentally threw an important item!
+
 First of: How even?
+
 If you want to get it back search for a "Garbage Dump" biome, there small piles of garbage will appear with Suspicious Garbage Blocks, use a Brush to extract items from them, you'll get at random any of the stacks you've ever thrown away.
 
 
