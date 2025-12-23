@@ -94,7 +94,7 @@ public class TrashCanBlock extends BlockWithEntity {
 
     @Override
     protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        List<GarbageTruckEntity> garbageTrucks = world.getEntitiesByType(TypeFilter.instanceOf(GarbageTruckEntity.class),  Box.of(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), 30, 100, 30), EntityPredicates.VALID_ENTITY);
+        List<GarbageTruckEntity> garbageTrucks = world.getEntitiesByType(TypeFilter.instanceOf(GarbageTruckEntity.class),  Box.of(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), 20, 100, 20), EntityPredicates.VALID_ENTITY);
         if(random.nextDouble() > 0.5 && garbageTrucks.size() < 3){
             OverlyComplicatedGarbage.LOGGER.info("spawn truck");
             int xRand = world.getRandom().nextInt(10);
@@ -180,11 +180,11 @@ public class TrashCanBlock extends BlockWithEntity {
                 if (held_item == OCGarbageItems.HELD_PLASTIC_BAG)
                 {
                     Iterable<ItemStack> items = player.getStackInHand(player.getActiveHand()).getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT).iterateNonEmpty();
+                    world.setBlockState(pos, state.with(HAS_BAG, true));
                     for (ItemStack stack : items)
                     {
                         trashCanBlockEntity.addItem(world, pos, stack, state);
                     }
-                    world.setBlockState(pos, state.with(HAS_BAG, true));
                     player.getStackInHand(player.getActiveHand()).setCount(0);
                 }
                 else

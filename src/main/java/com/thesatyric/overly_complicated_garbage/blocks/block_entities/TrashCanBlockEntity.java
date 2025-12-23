@@ -53,34 +53,7 @@ public class TrashCanBlockEntity extends BlockEntity implements Inventory{
         else {
             itemsToAdd = stack.getCount();
         }
-        /*for (ItemStack item : items) {
-            if (item.getItem() == stack.getItem())
-            {
-                if (item.getCount() < item.getMaxCount() - itemsToAdd)
-                {
-                    item.increment(itemsToAdd);
-                    stack.decrement(itemsToAdd);
-                    itemCount += itemsToAdd;
-                }
-                else
-                {
-                    item.increment(item.getMaxCount() - item.getCount());
-                    stack.decrement(item.getMaxCount() - item.getCount());
-                    itemCount += item.getMaxCount() - item.getCount();
-                    itemsToAdd -= item.getMaxCount() - item.getCount();
-                }
-            }
-        }
-        if (itemsToAdd == 0) {
-            if (itemCount > 0) {
-                world.setBlockState(pos, state.with(TrashCanBlock.HAS_GARBAGE, true));
-            }
-            else {
-                world.setBlockState(pos, state.with(TrashCanBlock.HAS_GARBAGE, false));
-            }
-            markDirty();
-            return;
-        }*/
+
         ItemStack stackToAdd = stack.copy();
         stackToAdd.setCount(itemsToAdd);
         items.set(latestSlot, stackToAdd);
@@ -88,7 +61,7 @@ public class TrashCanBlockEntity extends BlockEntity implements Inventory{
         latestSlot += 1;
         itemCount += itemsToAdd;
         if (itemCount > 0) {
-            world.setBlockState(pos, state.with(TrashCanBlock.HAS_GARBAGE, true));
+            world.setBlockState(pos, state.with(TrashCanBlock.HAS_BAG, true).with(TrashCanBlock.HAS_GARBAGE, true));
         }
         else {
             world.setBlockState(pos, state.with(TrashCanBlock.HAS_GARBAGE, false));

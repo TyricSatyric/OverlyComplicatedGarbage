@@ -52,6 +52,8 @@ public abstract class ItemEntityMixin extends Entity {
     @Shadow public abstract void setStack(ItemStack stack);
 
     @Unique public boolean canDespawn = false;
+    @Unique
+    public boolean spawnedAsh = false;
 
     public ItemEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -172,10 +174,14 @@ public abstract class ItemEntityMixin extends Entity {
             ItemEntity new_entity = new ItemEntity(getWorld(), getX(), getY(), getZ(), new_stack);
             if (getWorld() instanceof ServerWorld)
             {
-                getWorld().spawnEntity(new_entity);
-                getWorld().playSound((PlayerEntity) null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_GENERIC_BURN, this.getSoundCategory(), 0.4F, 2.0F + this.random.nextFloat() * 0.4F);
+                if (!spawnedAsh)
+                {
+                    getWorld().spawnEntity(new_entity);
+                    getWorld().playSound((PlayerEntity) null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_GENERIC_BURN, this.getSoundCategory(), 0.4F, 2.0F + this.random.nextFloat() * 0.4F);
+                    spawnedAsh = true;
+                }
+                this.damage((ServerWorld) getWorld(), this.getDamageSources().lava(), 4.0F);
             }
-            this.discard();
         }
     }
 
